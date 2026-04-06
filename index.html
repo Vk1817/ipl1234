@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CrickCast Live</title>
+<title>CrickCast Star</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root{
-    --bg:#0f172a;
-    --card:#1e293b;
-    --primary:#3b82f6;
-    --accent:#22c55e;
+    --bg:#020617;
+    --card:#0f172a;
+    --blue:#3b82f6;
+    --neon:#22c55e;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
 
 body{
-    background:linear-gradient(180deg,#020617,#0f172a);
+    background: radial-gradient(circle at top,#020617,#000);
     color:white;
 }
 
@@ -26,10 +26,11 @@ body{
 .header{
     text-align:center;
     padding:18px;
-    font-weight:700;
-    font-size:22px;
-    background:linear-gradient(90deg,#2563eb,#1d4ed8);
-    box-shadow:0 5px 25px rgba(0,0,0,0.4);
+    font-size:24px;
+    font-weight:800;
+    background:linear-gradient(90deg,#2563eb,#22c55e);
+    letter-spacing:1px;
+    box-shadow:0 0 30px rgba(59,130,246,0.6);
 }
 
 /* CONTAINER */
@@ -42,54 +43,61 @@ body{
 /* PLAYER */
 .player{
     position:relative;
-    border-radius:16px;
+    border-radius:18px;
     overflow:hidden;
-    box-shadow:0 0 30px rgba(59,130,246,0.3);
+    box-shadow:0 0 40px rgba(34,197,94,0.4);
+    border:1px solid rgba(255,255,255,0.1);
 }
 
 .player iframe{
     width:100%;
-    height:230px;
+    height:240px;
     border:none;
 }
 
-/* ONE CLICK AD OVERLAY */
+/* OVERLAY */
 .overlay{
     position:absolute;
     inset:0;
     z-index:5;
-    background:transparent;
 }
 
 /* LIVE BADGE */
 .live{
     position:absolute;
-    top:10px;
-    left:10px;
-    background:#facc15;
-    color:black;
-    padding:5px 10px;
-    border-radius:8px;
+    top:12px;
+    left:12px;
+    background:#22c55e;
+    padding:6px 12px;
+    border-radius:10px;
     font-size:12px;
-    font-weight:bold;
+    font-weight:700;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{box-shadow:0 0 5px #22c55e;}
+    50%{box-shadow:0 0 20px #22c55e;}
+    100%{box-shadow:0 0 5px #22c55e;}
 }
 
 /* DROPDOWN */
 .controls{
-    margin-top:12px;
-    padding:12px;
-    border-radius:14px;
+    margin-top:14px;
     background:var(--card);
+    padding:14px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.05);
 }
 
 select{
     width:100%;
     padding:14px;
-    border:none;
     border-radius:10px;
+    border:none;
     background:#020617;
     color:white;
-    font-size:15px;
+    font-weight:600;
 }
 
 /* STATUS */
@@ -97,27 +105,41 @@ select{
     text-align:center;
     margin-top:8px;
     font-size:13px;
-    color:var(--accent);
+    color:#22c55e;
 }
 
-/* SOCIAL */
-.card{
-    margin-top:14px;
-    padding:16px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.05);
+/* PREMIUM MESSAGE */
+.premium-box{
+    margin-top:15px;
+    padding:18px;
+    border-radius:16px;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    border:1px solid rgba(255,255,255,0.08);
+    text-align:center;
 }
 
-.btns{
+.premium-box h2{
+    font-size:18px;
+    margin-bottom:8px;
+    color:#3b82f6;
+}
+
+.premium-box p{
+    font-size:14px;
+    opacity:0.85;
+}
+
+/* SOCIAL (NO WHATSAPP HERE) */
+.social{
     display:flex;
     gap:10px;
-    margin-top:10px;
+    margin-top:12px;
 }
 
 .btn{
     flex:1;
-    text-align:center;
     padding:12px;
+    text-align:center;
     border-radius:10px;
     text-decoration:none;
     color:white;
@@ -125,24 +147,24 @@ select{
 }
 
 .telegram{background:#229ED9;}
-.whatsapp{background:#25D366;}
 .instagram{background:#e1306c;}
 
 /* BANNER */
 .banner{
-    margin-top:12px;
+    margin-top:15px;
 }
 
 .banner img{
     width:100%;
-    border-radius:12px;
+    border-radius:14px;
+    box-shadow:0 0 25px rgba(255,255,255,0.1);
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">🏏 CRICKCAST LIVE</div>
+<div class="header">🏏 CRICKCAST LIVE EXPERIENCE</div>
 
 <div class="container">
 
@@ -154,28 +176,31 @@ select{
         <iframe id="player" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
 
-    <!-- CHANNEL SELECT -->
+    <!-- CONTROLS -->
     <div class="controls">
         <select id="channelSelect">
             <option>Loading channels...</option>
         </select>
-        <div class="status" id="status">Fetching streams...</div>
+        <div class="status" id="status">Loading live feeds...</div>
     </div>
 
-    <!-- SOCIAL -->
-    <div class="card">
-        <h3>🚀 Join CrickCast Community</h3>
+    <!-- PREMIUM MESSAGE -->
+    <div class="premium-box">
+        <h2>🔥 Experience IPL Like Never Before</h2>
+        <p>
+            Ultra-fast streams. Zero interruptions. Backup links ready.  
+            Stay ahead of the game — never miss a single ball.
+        </p>
 
-        <div class="btns">
-            <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" class="btn telegram">Telegram</a>
-            <a href="https://wa.me/447955881183?text=Join%20CrickCast" class="btn whatsapp">WhatsApp</a>
-            <a href="https://www.instagram.com/crickcast.live" class="btn instagram">Instagram</a>
+        <div class="social">
+            <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" class="btn telegram">Telegram Updates</a>
+            <a href="https://www.instagram.com/crickcast.live" class="btn instagram">Behind the Scenes</a>
         </div>
     </div>
 
-    <!-- BANNER -->
+    <!-- BANNER (WHATSAPP + OFFSTUMP) -->
     <div class="banner">
-        <a href="https://offstump.com" target="_blank">
+        <a href="https://wa.me/447955881183?text=CRICKCAST%20PREMIUM%20ACCESS" target="_blank">
             <img src="https://github.com/Vk1817/IPL1/blob/main/offstumphd.jpg?raw=true">
         </a>
     </div>
@@ -192,35 +217,32 @@ const overlay = document.getElementById("overlay");
 let channels = [];
 let adShown = false;
 
-// FETCH CHANNELS
-async function loadChannels(){
+async function load(){
     try{
         const res = await fetch(API);
         const data = await res.json();
 
-        channels = data.filter(c => c.name.toLowerCase().includes("star sports"));
+        channels = data.filter(c=>c.name.toLowerCase().includes("star sports"));
 
         select.innerHTML = channels.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
 
-        status.innerText = `Loaded ${channels.length} channels`;
+        status.innerText = `🔥 ${channels.length} Live Channels Ready`;
         play(0);
-    }catch(e){
-        status.innerText = "Failed to load";
+    }catch{
+        status.innerText = "⚠️ Stream loading failed";
     }
 }
 
-// PLAY CHANNEL
 function play(i){
     player.src = channels[i].link;
 }
 
-// CHANGE CHANNEL
-select.addEventListener("change", e=>{
+select.addEventListener("change",e=>{
     play(e.target.value);
 });
 
-// ONE CLICK AD ONLY FIRST TIME
-overlay.onclick = () => {
+/* ONE TIME OFFSTUMP */
+overlay.onclick = ()=>{
     if(!adShown){
         window.open("https://offstump.com","_blank");
         adShown = true;
@@ -228,7 +250,7 @@ overlay.onclick = () => {
     }
 };
 
-loadChannels();
+load();
 </script>
 
 </body>
