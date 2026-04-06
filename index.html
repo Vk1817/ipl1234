@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CrickCast Star</title>
+<title>CrickCast Star Arena</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;800&display=swap" rel="stylesheet">
 
@@ -81,7 +81,7 @@ body{
     100%{box-shadow:0 0 5px #22c55e;}
 }
 
-/* DROPDOWN */
+/* CONTROLS */
 .controls{
     margin-top:14px;
     background:var(--card);
@@ -129,7 +129,7 @@ select{
     opacity:0.85;
 }
 
-/* SOCIAL (NO WHATSAPP HERE) */
+/* SOCIAL */
 .social{
     display:flex;
     gap:10px;
@@ -139,15 +139,29 @@ select{
 .btn{
     flex:1;
     padding:12px;
-    text-align:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
     border-radius:10px;
     text-decoration:none;
     color:white;
     font-weight:600;
+    transition:0.3s;
+}
+
+.btn img{
+    width:20px;
+    height:20px;
 }
 
 .telegram{background:#229ED9;}
 .instagram{background:#e1306c;}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px rgba(255,255,255,0.2);
+}
 
 /* BANNER */
 .banner{
@@ -164,7 +178,7 @@ select{
 
 <body>
 
-<div class="header">🏏 CRICKCAST LIVE EXPERIENCE</div>
+<div class="header">🏏 CRICKCAST STAR ARENA</div>
 
 <div class="container">
 
@@ -181,24 +195,31 @@ select{
         <select id="channelSelect">
             <option>Loading channels...</option>
         </select>
-        <div class="status" id="status">Loading live feeds...</div>
+        <div class="status" id="status">Loading live streams...</div>
     </div>
 
     <!-- PREMIUM MESSAGE -->
     <div class="premium-box">
-        <h2>🔥 Experience IPL Like Never Before</h2>
+        <h2>🔥 Enter the Stadium. Feel the Game.</h2>
         <p>
-            Ultra-fast streams. Zero interruptions. Backup links ready.  
-            Stay ahead of the game — never miss a single ball.
+            Lightning-fast streams, zero interruptions, and instant backup feeds.  
+            This is not just streaming — this is the CrickCast experience.
         </p>
 
         <div class="social">
-            <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" class="btn telegram">Telegram Updates</a>
-            <a href="https://www.instagram.com/crickcast.live" class="btn instagram">Behind the Scenes</a>
+            <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" class="btn telegram">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+                Telegram Updates
+            </a>
+
+            <a href="https://www.instagram.com/crickcast.live" class="btn instagram">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
+                Behind the Scenes
+            </a>
         </div>
     </div>
 
-    <!-- BANNER (WHATSAPP + OFFSTUMP) -->
+    <!-- BANNER -->
     <div class="banner">
         <a href="https://wa.me/447955881183?text=CRICKCAST%20PREMIUM%20ACCESS" target="_blank">
             <img src="https://github.com/Vk1817/IPL1/blob/main/offstumphd.jpg?raw=true">
@@ -226,7 +247,7 @@ async function load(){
 
         select.innerHTML = channels.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
 
-        status.innerText = `🔥 ${channels.length} Live Channels Ready`;
+        status.innerText = `🔥 ${channels.length} Star Sports Channels Ready`;
         play(0);
     }catch{
         status.innerText = "⚠️ Stream loading failed";
@@ -241,7 +262,7 @@ select.addEventListener("change",e=>{
     play(e.target.value);
 });
 
-/* ONE TIME OFFSTUMP */
+/* ONE CLICK OFFSTUMP */
 overlay.onclick = ()=>{
     if(!adShown){
         window.open("https://offstump.com","_blank");
