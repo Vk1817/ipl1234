@@ -22,47 +22,43 @@ body{
     color:white;
 }
 
-/* HEADER */
 .header{
     text-align:center;
     padding:18px;
     font-size:24px;
     font-weight:800;
     background:linear-gradient(90deg,#2563eb,#22c55e);
-    letter-spacing:1px;
     box-shadow:0 0 30px rgba(59,130,246,0.6);
 }
 
-/* CONTAINER */
 .container{
     max-width:900px;
     margin:auto;
     padding:15px;
 }
 
-/* PLAYER */
 .player{
     position:relative;
     border-radius:18px;
     overflow:hidden;
     box-shadow:0 0 40px rgba(34,197,94,0.4);
-    border:1px solid rgba(255,255,255,0.1);
 }
 
+/* iframe */
 .player iframe{
     width:100%;
     height:240px;
     border:none;
 }
 
-/* OVERLAY */
+/* ONE CLICK AD OVERLAY */
 .overlay{
     position:absolute;
     inset:0;
     z-index:5;
 }
 
-/* LIVE BADGE */
+/* LIVE */
 .live{
     position:absolute;
     top:12px;
@@ -81,13 +77,11 @@ body{
     100%{box-shadow:0 0 5px #22c55e;}
 }
 
-/* CONTROLS */
 .controls{
     margin-top:14px;
     background:var(--card);
     padding:14px;
     border-radius:14px;
-    border:1px solid rgba(255,255,255,0.05);
 }
 
 select{
@@ -97,10 +91,8 @@ select{
     border:none;
     background:#020617;
     color:white;
-    font-weight:600;
 }
 
-/* STATUS */
 .status{
     text-align:center;
     margin-top:8px;
@@ -108,28 +100,14 @@ select{
     color:#22c55e;
 }
 
-/* PREMIUM MESSAGE */
 .premium-box{
     margin-top:15px;
     padding:18px;
     border-radius:16px;
     background:linear-gradient(135deg,#020617,#0f172a);
-    border:1px solid rgba(255,255,255,0.08);
     text-align:center;
 }
 
-.premium-box h2{
-    font-size:18px;
-    margin-bottom:8px;
-    color:#3b82f6;
-}
-
-.premium-box p{
-    font-size:14px;
-    opacity:0.85;
-}
-
-/* SOCIAL */
 .social{
     display:flex;
     gap:10px;
@@ -147,23 +125,15 @@ select{
     text-decoration:none;
     color:white;
     font-weight:600;
-    transition:0.3s;
 }
 
 .btn img{
     width:20px;
-    height:20px;
 }
 
 .telegram{background:#229ED9;}
 .instagram{background:#e1306c;}
 
-.btn:hover{
-    transform:scale(1.05);
-    box-shadow:0 0 15px rgba(255,255,255,0.2);
-}
-
-/* BANNER */
 .banner{
     margin-top:15px;
 }
@@ -171,7 +141,6 @@ select{
 .banner img{
     width:100%;
     border-radius:14px;
-    box-shadow:0 0 25px rgba(255,255,255,0.1);
 }
 </style>
 </head>
@@ -185,43 +154,47 @@ select{
     <!-- PLAYER -->
     <div class="player">
         <div class="live">LIVE</div>
+
+        <!-- ONE CLICK AD -->
         <div class="overlay" id="overlay"></div>
 
-        <iframe id="player" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe 
+            id="player"
+            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+            allowfullscreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation">
+        </iframe>
     </div>
 
     <!-- CONTROLS -->
     <div class="controls">
         <select id="channelSelect">
-            <option>Loading channels...</option>
+            <option>Loading...</option>
         </select>
-        <div class="status" id="status">Loading live streams...</div>
+        <div class="status" id="status">Loading streams...</div>
     </div>
 
-    <!-- PREMIUM MESSAGE -->
+    <!-- MESSAGE -->
     <div class="premium-box">
-        <h2>🔥 Enter the Stadium. Feel the Game.</h2>
-        <p>
-            Lightning-fast streams, zero interruptions, and instant backup feeds.  
-            This is not just streaming — this is the CrickCast experience.
-        </p>
+        <h2>🔥 Experience IPL Like Never Before</h2>
+        <p>Fast streams. Backup links. Zero miss action.</p>
 
         <div class="social">
             <a href="https://t.me/addlist/6qALMSdKoVVkNWI1" class="btn telegram">
                 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
-                Telegram Updates
+                Telegram
             </a>
 
             <a href="https://www.instagram.com/crickcast.live" class="btn instagram">
                 <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png">
-                Behind the Scenes
+                Instagram
             </a>
         </div>
     </div>
 
-    <!-- BANNER -->
+    <!-- BANNER (WHATSAPP AUTO MESSAGE) -->
     <div class="banner">
-        <a href="https://wa.me/447955881183?text=CRICKCAST%20PREMIUM%20ACCESS" target="_blank">
+        <a href="https://wa.me/447955881183?text=Hello%20I%20want%20CrickCast%20Premium%20Access" target="_blank">
             <img src="https://github.com/Vk1817/IPL1/blob/main/offstumphd.jpg?raw=true">
         </a>
     </div>
@@ -232,37 +205,29 @@ select{
 const API = "https://jiot.akcoder777.workers.dev/";
 const player = document.getElementById("player");
 const select = document.getElementById("channelSelect");
-const status = document.getElementById("status");
 const overlay = document.getElementById("overlay");
 
 let channels = [];
 let adShown = false;
 
 async function load(){
-    try{
-        const res = await fetch(API);
-        const data = await res.json();
+    const res = await fetch(API);
+    const data = await res.json();
 
-        channels = data.filter(c=>c.name.toLowerCase().includes("star sports"));
+    channels = data.filter(c=>c.name.toLowerCase().includes("star sports"));
 
-        select.innerHTML = channels.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
+    select.innerHTML = channels.map((c,i)=>`<option value="${i}">${c.name}</option>`).join("");
 
-        status.innerText = `🔥 ${channels.length} Star Sports Channels Ready`;
-        play(0);
-    }catch{
-        status.innerText = "⚠️ Stream loading failed";
-    }
+    play(0);
 }
 
 function play(i){
     player.src = channels[i].link;
 }
 
-select.addEventListener("change",e=>{
-    play(e.target.value);
-});
+select.onchange = e => play(e.target.value);
 
-/* ONE CLICK OFFSTUMP */
+/* ONE CLICK OFFSTUMP AD */
 overlay.onclick = ()=>{
     if(!adShown){
         window.open("https://offstump.com","_blank");
